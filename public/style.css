@@ -1,0 +1,671 @@
+/* =======================================================
+   1. COLOR THEME (Pakistani-inspired green + gold palette)
+   Change these values to re-color the entire website.
+======================================================= */
+:root{
+  --bg:            #FFFFFF;   /* main background */
+  --bg-alt:        #F4F9F6;   /* light green-tinted section background */
+  --border:        #E1E8E4;   /* light border color */
+
+  --text:          #14201B;   /* main text color (dark green-black) */
+  --text-muted:    #566761;   /* secondary/paragraph text */
+
+  --primary:       #04713C;   /* Pakistan flag green */
+  --primary-dark:  #035C31;   /* darker green for hover states */
+  --primary-soft:  #E5F3EB;   /* light green background */
+
+  --gold:          #C9A227;   /* gold accent for highlights */
+
+  --white:         #FFFFFF;
+  --danger:        #D6564A;
+  --success:       #1E9E6B;
+
+  --radius:        10px;
+  --nav-height:    75px;
+}
+
+/* Dark mode colors — activated when body has data-theme="dark" */
+[data-theme="dark"]{
+  --bg:            #0D1512;
+  --bg-alt:        #121C18;
+  --border:        #24312B;
+
+  --text:          #EAF2EE;
+  --text-muted:    #A0B0AA;
+
+  --primary:       #2ECC71;
+  --primary-dark:  #27AE60;
+  --primary-soft:  #16261F;
+
+  --gold:          #E0BC4D;
+}
+
+
+/* =======================================================
+   2. BASIC RESET
+======================================================= */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html{
+  scroll-behavior: smooth;
+}
+body{
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+h1, h2, h3, h4{
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.25;
+}
+img{
+  max-width: 100%;
+  display: block;
+  border-radius: var(--radius);
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+ul{ list-style: none; }
+
+.container{
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+
+/* =======================================================
+   3. BUTTONS
+======================================================= */
+.btn{
+  display: inline-block;
+  padding: 13px 24px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-primary{
+  background: var(--primary);
+  color: var(--white);
+}
+.btn-primary:hover{
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+.btn-outline{
+  background: transparent;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.btn-outline:hover{
+  background: var(--primary-soft);
+}
+.btn-full{
+  width: 100%;
+}
+
+
+/* =======================================================
+   4. NAVBAR
+======================================================= */
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+/* This class gets added by JavaScript once the user scrolls down */
+.navbar.scrolled{
+  border-color: var(--border);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
+.nav-inner{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-icon{ color: var(--primary); }
+.logo-ai{ color: var(--gold); }
+
+.nav-links{
+  display: flex;
+  gap: 8px;
+}
+.nav-links a{
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.nav-links a:hover{
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.nav-actions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle, .hamburger{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hamburger icon lines (hidden on desktop, shown on mobile) */
+.hamburger{
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: var(--radius);
+}
+.hamburger span{
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+/* Mobile side menu */
+.mobile-menu{
+  position: fixed;
+  top: 0;
+  right: -280px; /* hidden off-screen by default */
+  width: 260px;
+  height: 100%;
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+  padding: 100px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 1001;
+  transition: right 0.3s ease;
+}
+.mobile-menu.open{
+  right: 0; /* slides into view when "open" class is added */
+}
+.mobile-menu a{
+  padding: 12px 6px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+}
+
+.overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+  display: none;
+}
+.overlay.open{
+  display: block;
+}
+
+
+/* =======================================================
+   5. HERO / HOME SECTION
+======================================================= */
+.hero{
+  padding: calc(var(--nav-height) + 60px) 0 80px;
+  background: var(--bg-alt);
+}
+.hero-inner{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.badge{
+  display: inline-block;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.hero-text h1{
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 18px;
+}
+.hero-text .highlight{
+  color: var(--primary);
+}
+.hero-text p{
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 500px;
+  margin-bottom: 26px;
+}
+.hero-buttons{
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.hero-stats{
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.hero-stats strong{
+  display: block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+.hero-stats span{
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.hero-image{
+  position: relative;
+}
+.floating-card{
+  position: absolute;
+  bottom: -20px;
+  left: -20px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+.floating-card strong{ display: block; font-size: 0.9rem; }
+.floating-card p{ font-size: 0.8rem; color: var(--text-muted); }
+
+
+/* =======================================================
+   6. GENERAL SECTION STYLES
+======================================================= */
+.section{
+  padding: 90px 0;
+}
+.section-alt{
+  background: var(--bg-alt);
+}
+.section-head{
+  max-width: 600px;
+  margin-bottom: 46px;
+}
+.section-tag{
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.section-head h2{
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  margin: 12px 0 14px;
+}
+.section-head p{
+  color: var(--text-muted);
+}
+
+
+/* =======================================================
+   7. ABOUT SECTION
+======================================================= */
+.about-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+.about-list{
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+.about-list li{
+  color: var(--text-muted);
+}
+
+
+/* =======================================================
+   8. SERVICES SECTION
+======================================================= */
+.services-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.service-card{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.service-card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+.service-icon{
+  font-size: 1.8rem;
+  width: 54px;
+  height: 54px;
+  border-radius: var(--radius);
+  background: var(--primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.service-card h3{
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+.service-card p{
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+
+/* =======================================================
+   9. PORTFOLIO SECTION
+======================================================= */
+.portfolio-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.portfolio-card{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.portfolio-card img{
+  border-radius: 0;
+  height: 220px;
+  width: 100%;
+  object-fit: cover;
+}
+.portfolio-info{
+  padding: 20px;
+}
+.portfolio-info .tag{
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.portfolio-info h3{
+  font-size: 1.1rem;
+  margin: 8px 0;
+}
+.portfolio-info p{
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+
+/* =======================================================
+   10. TEAM SECTION
+======================================================= */
+.team-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.team-card{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+}
+.team-card img{
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 16px;
+}
+.team-card h3{
+  font-size: 1rem;
+}
+.team-card .role{
+  display: block;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 6px 0 10px;
+}
+.team-card p{
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+
+/* =======================================================
+   11. CONTACT SECTION
+======================================================= */
+.contact-grid{
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 50px;
+}
+.contact-info p{
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.info-item{
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.contact-form{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 30px;
+}
+.contact-form label{
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+.contact-form input,
+.contact-form textarea{
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  margin-bottom: 6px;
+}
+.contact-form textarea{
+  min-height: 110px;
+  resize: vertical;
+}
+.contact-form input:focus,
+.contact-form textarea:focus{
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Error messages are hidden by default. JavaScript shows them when needed. */
+.error{
+  display: none;
+  color: var(--danger);
+  font-size: 0.8rem;
+  margin-bottom: 14px;
+}
+/* When a field has the "invalid" class (added by JS), show its border + error text */
+.invalid{
+  border-color: var(--danger) !important;
+}
+.invalid + .error{
+  display: block;
+}
+
+.form-message{
+  display: none;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+.form-message.success{
+  display: block;
+  background: rgba(30,158,107,0.12);
+  color: var(--success);
+}
+.form-message.fail{
+  display: block;
+  background: rgba(214,86,74,0.12);
+  color: var(--danger);
+}
+
+
+/* =======================================================
+   12. FOOTER
+======================================================= */
+.footer{
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  padding: 60px 0 20px;
+}
+.footer-grid{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+}
+.footer p{
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 12px;
+}
+.footer h4{
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.footer div a{
+  display: block;
+  color: var(--text-muted);
+  padding: 6px 0;
+}
+.footer div a:hover{
+  color: var(--primary);
+}
+.footer-bottom{
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+
+/* =======================================================
+   13. SCROLL-TO-TOP BUTTON
+======================================================= */
+.scroll-top{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+  /* Hidden by default — JavaScript adds "visible" class on scroll */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.25s ease;
+}
+.scroll-top.visible{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+
+/* =======================================================
+   14. RESPONSIVE DESIGN
+======================================================= */
+
+/* Tablets */
+@media (max-width: 1024px){
+  .services-grid{ grid-template-columns: repeat(2, 1fr); }
+  .team-grid{ grid-template-columns: repeat(2, 1fr); }
+  .hero-inner{ grid-template-columns: 1fr; }
+  .hero-image{ order: -1; }
+  .about-grid{ grid-template-columns: 1fr; }
+  .contact-grid{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr 1fr; row-gap: 30px; }
+}
+
+/* Mobile phones */
+@media (max-width: 700px){
+  .nav-links{ display: none; }   /* hide full menu, hamburger takes over */
+  .hamburger{ display: flex; }
+  .section{ padding: 60px 0; }
+  .services-grid{ grid-template-columns: 1fr; }
+  .portfolio-grid{ grid-template-columns: 1fr; }
+  .team-grid{ grid-template-columns: 1fr; }
+  .footer-grid{ grid-template-columns: 1fr; }
+  .hero-buttons{ flex-direction: column; }
+  .hero-buttons .btn{ text-align: center; }
+}
